@@ -1,0 +1,33 @@
+{
+  "name": "rn-searchable-picker",
+  "version": "0.0.1",
+  "description": "React Native searchable dropdown for pick a single item",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo\"Error: no test specified\" && exit 1"
+  },
+  "author": "Sandeep Vithanage <sandeepkushaj3@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "keywords": [
+    "react",
+    "native",
+    "searchable",
+    "search",
+    "picker",
+    "dropdown",
+    "select"
+  ],
+  "peerDependencies": {
+    "react": "^17.0.2",
+    "react-native": "^0.68.1"
+  },
+  "dependencies": {
+    "react-native-responsive-screen": "^1.4.2",
+    "react-native-vector-icons": "^9.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SandeepKushajVithanage/rn-searchable-picker.git"
+  }
+}
