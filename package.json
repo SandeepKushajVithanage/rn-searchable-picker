@@ -1,6 +1,6 @@
 {
   "name": "rn-searchable-picker",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "React Native searchable dropdown for pick a single item",
   "main": "index.js",
   "scripts": {

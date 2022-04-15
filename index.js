@@ -28,10 +28,12 @@ const RNSearchablePicker = props => {
     const [initial, setInitial] = useState(true)
 
     const onPressItem = (item, index) => {
-        props?.onValueChange(item?.value, index)
+        props?.onValueChange(item?.value, index, item)
         setSelected(item)
         setVisible(false)
     }
+
+    const closeByIcon = props?.closeByBackgroundTouch ? !props?.closeByBackgroundTouch : true
 
     const renderItem = ({ item, index }) => {
         return (
@@ -41,10 +43,14 @@ const RNSearchablePicker = props => {
                     padding: 10,
                     marginHorizontal: item?.value && item?.value !== '' ? 5 : 0,
                     borderRadius: 5,
-                    backgroundColor: item?.value && item?.value !== '' ? item?.value === selected?.value ? '#f0f0f0' : 'none' : 'none',
+                    backgroundColor: item?.value && item?.value !== '' ? item?.value === selected?.value ? props?.selectedValueBackgroundColor || '#f0f0f0' : props?.itemBackgroundColor || 'none' : props?.itemBackgroundColor || 'none',
                 }}>
                 <Text style={{
-                    color: item?.value && item?.value !== '' ? 'black' : 'grey',
+                    color: item?.value === selected?.value ? 
+                    props?.selectedValueColor || '#000' : 
+                    item?.value && item?.value !== '' && 
+                    item?.value !== props?.placeholder?.value ? 
+                    props?.itemColor || 'black' : 'grey',
                     fontSize: 15,
                 }} numberOfLines={1}>{item.label}</Text>
             </TouchableOpacity>
@@ -59,18 +65,32 @@ const RNSearchablePicker = props => {
                     width: '100%',
                 }}
             />
-        );
-    };
+        )
+    }
+
+    const Icon = props?.renderIcon ? color => props?.renderIcon(color?.color) : color => {
+        console.log('Color', color)
+        return (
+            <AntDesign
+                style={{ marginLeft: 10 }}
+                name={'caretdown'}
+                size={9}
+                color={color?.color} />
+        )
+    }
 
     const onTextChange = (text) => {
         setSearch(text)
+        props?.onChangeText(text)
     }
 
     useEffect(() => {
         if (visible === false) {
             setSearch('')
+            props?.onClose()
         } else {
             Keyboard.dismiss()
+            props?.onOpen()
         }
     }, [visible])
 
@@ -107,7 +127,7 @@ const RNSearchablePicker = props => {
         })
         setList(tempList, 0)
     }, [search])
-    
+
     return (
         <View style={styles.container}>
             <TouchableOpacity
@@ -115,33 +135,39 @@ const RNSearchablePicker = props => {
                 style={[styles.selectedValueContainer, props?.containerStyle]}>
                 <Text
                     numberOfLines={1}
-                    style={selected?.value && selected?.value !== '' ?
+                    style={selected?.value && selected?.value !== '' && selected?.value !== props?.placeholder?.value ?
                         [styles.selectedValue, styles.value, props?.valueStyle] :
                         [styles.selectedValue, styles.placeholder, props?.placeholderStyle]}>
-                    {selected?.label ? selected?.label : props?.placeholder?.label}
+                    {selected?.label || props?.placeholder?.label}
                 </Text>
-                <AntDesign
-                    style={{ marginLeft: 10 }}
-                    name={'caretdown'}
-                    size={9}
-                    color={selected?.value && selected?.value !== '' ? '#000' : 'grey'} />
+                <Icon color={
+                    selected?.value && selected?.value !== '' &&
+                        selected?.value !== props?.placeholder?.value ?
+                        props?.valueStyle?.color || '#000' :
+                        props?.placeholderStyle?.color || 'grey'} />
             </TouchableOpacity>
             <Modal visible={visible} transparent={true}>
-                <TouchableOpacity disabled={true} onPress={() => setVisible(false)} activeOpacity={1}>
-                    <SafeAreaView style={styles.safeArea}>
+                <TouchableOpacity disabled={closeByIcon} onPress={() => setVisible(false)} activeOpacity={1}>
+                    <SafeAreaView style={[styles.safeArea, props?.popupOuterAreaColor ?
+                        { backgroundColor: props?.popupOuterAreaColor } : {}]}>
                         <View style={styles.closeIcon}>
-                            <TouchableOpacity onPress={() => setVisible(false)}>
-                                <Feater name={'x'} size={25} color={'white'} />
+                            {
+                                closeByIcon ? (
+                                    <TouchableOpacity onPress={() => setVisible(false)}>
+                                <Feater name={'x'} size={25} color={props?.popupBackgroundColor || 'white'} />
                             </TouchableOpacity>
+                                ) : <></>
+                            }
                         </View>
                         <View
                             onStartShouldSetResponder={() => true}
-                            style={styles.searchContainer}>
+                            style={[styles.searchContainer, props?.popupBackgroundColor ?
+                                { backgroundColor: props?.popupOuterAreaColor } : {}]}>
                             <TextInput
                                 placeholder={props?.searchPlaceholder}
                                 value={search}
                                 onChangeText={onTextChange}
-                                style={styles.textInput} />
+                                style={[styles.textInput, props?.textInputStyle]} />
                         </View>
                         <View onStartShouldSetResponder={() => true} style={{ height: 10 }} />
                         <View
@@ -175,7 +201,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         padding: Platform.OS === 'ios' ? 0 : 16,
         backgroundColor: '#FFF',
-        borderRadius: 10,
+        borderRadius: 5,
+        borderColor: 'grey',
+        borderWidth: 1,
     },
     selectedValue: {
         fontSize: 15,
