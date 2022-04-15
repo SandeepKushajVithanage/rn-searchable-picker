@@ -6,7 +6,11 @@
   "scripts": {
     "test": "echo\"Error: no test specified\" && exit 1"
   },
-  "author": "Sandeep Vithanage <sandeepkushaj3@gmail.com>",
+  "author": {
+    "name": "Sandeep Vithanage",
+    "email": "sandeepkushaj3@gmail.com",
+    "url": "https://github.com/SandeepKushajVithanage"
+  },
   "license": "MIT",
   "private": false,
   "keywords": [
@@ -29,5 +33,12 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/SandeepKushajVithanage/rn-searchable-picker.git"
-  }
+  },
+  "contributors": [
+    {
+      "name": "Antaneeta Fernando",
+      "url": "https://github.com/Antaneeta",
+      "email": "antaneetafernando9761@gmail.com"
+    }
+  ]
 }
