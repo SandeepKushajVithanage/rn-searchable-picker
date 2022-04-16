@@ -28,7 +28,7 @@ const RNSearchablePicker = props => {
     const [initial, setInitial] = useState(true)
 
     const onPressItem = (item, index) => {
-        props?.onValueChange(item?.value, index, item)
+        if (props?.onValueChange) props?.onValueChange(item?.value, index, item)
         setSelected(item)
         setVisible(false)
     }
@@ -59,17 +59,11 @@ const RNSearchablePicker = props => {
 
     const ItemSeparatorView = () => {
         return (
-            <View
-                style={{
-                    height: 10,
-                    width: '100%',
-                }}
-            />
+            <View style={styles.itemSeperator} />
         )
     }
 
     const Icon = props?.renderIcon ? color => props?.renderIcon(color?.color) : color => {
-        console.log('Color', color)
         return (
             <AntDesign
                 style={{ marginLeft: 10 }}
@@ -81,16 +75,16 @@ const RNSearchablePicker = props => {
 
     const onTextChange = (text) => {
         setSearch(text)
-        props?.onChangeText(text)
+        if (props?.onChangeText) props?.onChangeText(text)
     }
 
     useEffect(() => {
         if (visible === false) {
             setSearch('')
-            props?.onClose()
+            if (props?.onClose) props?.onClose()
         } else {
             Keyboard.dismiss()
-            props?.onOpen()
+            if (props?.onOpen) props?.onOpen()
         }
     }, [visible])
 
@@ -246,5 +240,9 @@ const styles = StyleSheet.create({
     textInput: {
         width: '100%',
         height: '100%',
+    },
+    itemSeperator: {
+        height: 10,
+        width: '100%',
     },
 })

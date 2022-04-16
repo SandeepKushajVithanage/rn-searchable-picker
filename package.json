@@ -1,6 +1,6 @@
 {
   "name": "rn-searchable-picker",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "React Native searchable dropdown for pick a single item",
   "main": "index.js",
   "scripts": {
@@ -20,7 +20,10 @@
     "search",
     "picker",
     "dropdown",
-    "select"
+    "select",
+    "mobile",
+    "android",
+    "ios"
   ],
   "peerDependencies": {
     "react": "^17.0.2",
@@ -40,5 +43,12 @@
       "url": "https://github.com/Antaneeta",
       "email": "antaneetafernando9761@gmail.com"
     }
-  ]
+  ],
+  "publishConfig": {
+    "registry": "https://www.npmjs.com/package/rn-searchable-picker"
+  },
+  "bugs": {
+    "url": "https://github.com/users/SandeepKushajVithanage/projects/1",
+    "email": "sandeepkushaj3@gmail.com"
+  }
 }

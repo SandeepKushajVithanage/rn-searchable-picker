@@ -1,6 +1,6 @@
 # rn-searchable-picker
 
-<i>rn-searchable-picker</i> is a small library that provides a dropdown menu which has an ability to search and select. So that React Native developers can use this for large set of items.
+<i>rn-searchable-picker</i> is a small library that provides a dropdown menu which has an ability to search and select. So that React Native developers can use this for large set of items. Working for both Android and iOS.
 
 Try it and make your life simpler! 
 
@@ -93,4 +93,16 @@ const styles = StyleSheet.create({
    padding: 10,
   },
 })
+```
+
+### Note
+
+<i>If you have used this inside a `ScrollView`, you can mention ths property to select an item when keyboard is opened, `keyboardShouldPersistTaps={'handled'}`.</i>
+
+```js
+<ScrollView
+  style={styles.container}
+  keyboardShouldPersistTaps={'handled'}>
+  <RNSearchablePicker items={data} />
+</ScrollView>
 ```
